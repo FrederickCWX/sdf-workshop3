@@ -54,26 +54,30 @@ public class Session {
 
         case DELETE:
           int idx = Integer.parseInt(terms[1]);
-          String item = currCart.delete(idx);
+          String item = currCart.delete(idx-1);
           System.out.printf("Removed %s from %s's cart",
               item, currCart.getUsername());
           break;
         
         case LOAD:
-          //currCart = reps
-          //TODO
+          currCart = repository.load(currCart.getUsername());
+          System.out.printf("%s's cart loaded succesfully. There are %s item(s)\n", currCart.getUsername(), currCart.getContents().size());
           break;
 
         case SAVE:
-          //TODO
+          repository.save(currCart);
+          System.out.println("Cart Saved!");
           break;
 
         case LOGIN:
           currCart = new Cart(terms[1]);
+          System.out.printf("%s login successful", terms[1]);
+            
           break;
 
         case USERS:
-          //TODO
+          List<String> allCarts = repository.getShoppingCarts();
+          this.printList(allCarts);
           break;
 
         case END:
